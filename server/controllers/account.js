@@ -1,4 +1,3 @@
-const { default: axios } = require('axios');
 const Stellar = require('stellar-sdk');
 const server = new Stellar.Server(process.env.URL, {
   allowHttp: true
@@ -12,17 +11,25 @@ class Account {
       throw new Error('secret key is missing.');
     }
     const publicKey = Stellar.Keypair.fromSecret(key).publicKey();
-    res.json({
-      publicKey
-    });
+    try {
+      return res.json({
+        publicKey
+      });
+    } catch (error) {
+      return res.json(error);
+    }
   }
 
   generateKeyPair(req, res, next) {
     const keypair = Stellar.Keypair.random();
-    res.json({
-      publicKey: keypair.publicKey(),
-      secretKey: keypair.secret()
-    });
+    try {
+      return res.json({
+        publicKey: keypair.publicKey(),
+        secretKey: keypair.secret()
+      });
+    } catch (error) {
+      return res.json(error);
+    }
   }
 
   async accountDetails(req, res) {
@@ -31,8 +38,12 @@ class Account {
       throw new Error('Public key is missing.');
     }
 
-    const acc = await server.loadAccount(key);
-    res.json(acc);
+    try {
+      const acc = await server.loadAccount(key);
+      return res.json(acc);
+    } catch (error) {
+      return res.json(error);
+    }
   }
 
   async fundAccount(req, res, next) {
@@ -41,9 +52,12 @@ class Account {
       throw new Error('Public key is missing.');
     }
     const url = `${process.env.FRIENDBOT}/?addr=${publicKey}`;
-    const result = await sendRequest('get', url);
-
-    res.json(result);
+    try {
+      const result = await sendRequest('get', url);
+      return res.json(result);
+    } catch (error) {
+      return res.json(error);
+    }
   }
 }
 
