@@ -1,6 +1,6 @@
 <template>
-  <div class="container mt-5">
-    <div class="mb-2">
+  <div class="container mt-3">
+    <div class="mb-4">
       <Account />
     </div>
     <Header />

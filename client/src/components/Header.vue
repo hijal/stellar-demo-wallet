@@ -1,27 +1,61 @@
 <template>
-  <div class="btn-group-vertical" role="group" aria-label="Basic example">
-    <button :class="createBtn" @click="setActive(1)" class="btn">
+  <div class="btn-group-vertical" role="group">
+    <button
+      :class="createBtn"
+      @click="setActive(1)"
+      class="btn btn-outline-primary mb-2"
+    >
       Create An Account
     </button>
-    <button :class="trustLineBtn" @click="setActive(2)" class="btn">
+    <button
+      :class="trustLineBtn"
+      @click="setActive(2)"
+      class="btn btn-outline-primary mb-2"
+    >
       Trust Line
     </button>
-    <button :class="updateBtn" @click="setActive(3)" class="btn">
+    <button
+      :class="updateBtn"
+      @click="setActive(3)"
+      class="btn btn-outline-primary mb-2"
+    >
       Update Account
     </button>
-    <button :class="acDetails" @click="setActive(4)" class="btn">
+    <button
+      :class="acDetails"
+      @click="setActive(4)"
+      class="btn btn-outline-primary mb-2"
+    >
       Account Details
     </button>
-    <button :class="payment" @click="setActive(5)" class="btn">
+    <button
+      :class="payment"
+      @click="setActive(5)"
+      class="btn btn-outline-primary mb-2"
+    >
       Make Payment
     </button>
-    <button :class="deposit" @click="setActive(6)" class="btn">
+    <button
+      :class="deposit"
+      @click="setActive(6)"
+      class="btn btn-outline-primary mb-2"
+    >
       Deposit Asset
     </button>
-    <button :class="withdraw" @click="setActive(7)" class="btn">
+    <button
+      :class="withdraw"
+      @click="setActive(7)"
+      class="btn btn-outline-primary mb-2"
+    >
       Withdraw Asset
     </button>
-    <button :class="signOut" @click="setActive(8)" class="btn">Sign Out</button>
+    <button
+      :class="signOut"
+      @click="setActive(8)"
+      class="btn btn-outline-primary mb-2"
+    >
+      Sign Out
+    </button>
   </div>
 </template>
 
@@ -32,7 +66,7 @@ export default {
   name: 'TheHeader',
   data() {
     return {
-      activeButton: 1
+      activeButton: null
     };
   },
   computed: {
