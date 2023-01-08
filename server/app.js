@@ -4,6 +4,7 @@ const express = require('express');
 const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
+const { PORT = 3000 } = require('./config/config');
 
 const app = express();
 
@@ -20,6 +21,6 @@ app.use(function (err, req, res, next) {
   });
 });
 
-app.listen(process.env.PORT, () => {
-  console.log('Server is running...');
+app.listen(PORT, () => {
+  console.log(`Server is running... http://localhost:${PORT}`);
 });

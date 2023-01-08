@@ -1,5 +1,6 @@
 const Stellar = require('stellar-sdk');
-const server = new Stellar.Server(process.env.URL, {
+const { URL } = require('../config/config');
+const server = new Stellar.Server(URL, {
   allowHttp: true
 });
 

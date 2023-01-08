@@ -1,5 +1,7 @@
 const Stellar = require('stellar-sdk');
-const server = new Stellar.Server(process.env.URL, {
+const { URL, FRIENDBOT } = require('../config/config');
+
+const server = new Stellar.Server(URL, {
   allowHttp: true
 });
 const sendRequest = require('../utils/httpReq');
@@ -51,7 +53,7 @@ class Account {
     if (!publicKey) {
       throw new Error('Public key is missing.');
     }
-    const url = `${process.env.FRIENDBOT}/?addr=${publicKey}`;
+    const url = `${FRIENDBOT}/?addr=${publicKey}`;
     try {
       const result = await sendRequest('get', url);
       return res.json(result);
