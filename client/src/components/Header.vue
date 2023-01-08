@@ -48,14 +48,17 @@ export default {
     acDetails() {
       return this.activeButton === 4 ? 'active' : '';
     },
-    deposit() {
+    payment() {
       return this.activeButton === 5 ? 'active' : '';
     },
-    withdraw() {
+    deposit() {
       return this.activeButton === 6 ? 'active' : '';
     },
-    signOut() {
+    withdraw() {
       return this.activeButton === 7 ? 'active' : '';
+    },
+    signOut() {
+      return this.activeButton === 8 ? 'active' : '';
     }
   },
   methods: {
