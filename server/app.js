@@ -2,11 +2,14 @@ require('dotenv').config();
 
 const express = require('express');
 const logger = require('morgan');
+const cors = require('cors');
 
 const indexRouter = require('./routes/index');
 const { PORT = 3000 } = require('./config/config');
 
 const app = express();
+
+app.use(cors());
 
 app.use(logger('dev'));
 app.use(express.json());

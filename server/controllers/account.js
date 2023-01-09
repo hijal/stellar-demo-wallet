@@ -1,3 +1,4 @@
+const { default: axios } = require('axios');
 const Stellar = require('stellar-sdk');
 const { URL, FRIENDBOT } = require('../config/config');
 
@@ -53,9 +54,10 @@ class Account {
     if (!publicKey) {
       throw new Error('Public key is missing.');
     }
-    const url = `${FRIENDBOT}/?addr=${publicKey}`;
     try {
-      const result = await sendRequest('get', url);
+      const result = await axios.get(
+        `https://friendbot.stellar.org/?addr=${publicKey}`
+      );
       return res.json(result);
     } catch (error) {
       return res.json(error);

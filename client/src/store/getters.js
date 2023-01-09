@@ -1,1 +1,5 @@
-export default {};
+export default {
+  account(state) {
+    return state.account;
+  }
+};

@@ -4,9 +4,13 @@ import rootMutationsModule from './mutations';
 import rootActionsModule from './actions';
 import rootGettersModule from './getters';
 
+const localAccount = JSON.parse(localStorage.getItem('account'));
+
 const store = createStore({
   state() {
-    return {};
+    return {
+      account: localAccount || null
+    };
   },
   mutations: rootMutationsModule,
   actions: rootActionsModule,
