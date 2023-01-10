@@ -35,7 +35,7 @@
                 type="text"
                 class="form-control"
                 id="issuer"
-                v-model="formData.issuerId"
+                v-model="formData.issuer"
                 placeholder="Issuer Account ID"
               />
             </div>
@@ -47,7 +47,11 @@
               >
                 Close
               </button>
-              <button type="submit" class="btn btn-primary">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                data-bs-dismiss="modal"
+              >
                 Add Trust Line
               </button>
             </div>
@@ -59,20 +63,35 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
   name: 'TrustLineModal',
   data() {
     return {
       formData: {
         code: '',
-        issuerId: ''
+        issuer: ''
       }
     };
   },
   methods: {
-    submitTrustLineHandler() {
-      console.log(this.formData);
+    ...mapActions(['accountDetails', 'addTrustLine']),
+    async submitTrustLineHandler() {
+      const secretKey = this.account.secretKey;
+      const publicKey = this.account.publicKey;
+
+      const payload = {
+        ...this.formData,
+        key: secretKey
+      };
+      const result = await this.addTrustLine(payload);
+      console.log(result);
+      await this.accountDetails(publicKey);
     }
+  },
+  computed: {
+    ...mapGetters(['account'])
   }
 };
 </script>

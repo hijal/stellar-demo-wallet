@@ -37,5 +37,14 @@ export default {
       });
   },
 
-  // addTrustLine(_, key) {}
+  addTrustLine(_, payload) {
+    return axios
+      .post(`${BASE_URL}/add-trustline`, payload)
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 };
