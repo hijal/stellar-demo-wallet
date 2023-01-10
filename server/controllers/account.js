@@ -19,7 +19,7 @@ class Account {
         publicKey
       });
     } catch (error) {
-      return res.json(error);
+      return res.json({ error: error.message });
     }
   }
 
@@ -31,21 +31,20 @@ class Account {
         secretKey: keypair.secret()
       });
     } catch (error) {
-      return res.json(error);
+      return res.json({ error: error.message });
     }
   }
 
-  async accountDetails(req, res) {
+  async acDetails(req, res, next) {
     const { key } = req.query;
     if (!key) {
       throw new Error('Public key is missing.');
     }
-
     try {
       const acc = await server.loadAccount(key);
       return res.json(acc);
     } catch (error) {
-      return res.json(error);
+      return res.json({ error: error.message });
     }
   }
 
@@ -60,9 +59,37 @@ class Account {
       );
       return res.json(result);
     } catch (error) {
-      return res.json(error);
+      return res.json({ error: error.message });
     }
   }
+  async addTrustLine(req, res, next) {
+    const { key, code, issuer } = req.body;
+    if (!key || !code || !issuer) {
+      return res.json({
+        error: 'Required fields are missing'
+      });
+    }
+    try {
+      const keypair = Stellar.Keypair.fromSecret(key);
+      const account = await server.loadAccount(keypair.publicKey());
+      const asset = new Stellar.Asset(code, issuer);
+      const transaction = new Stellar.TransactionBuilder(account, {
+        fee: await server.fetchBaseFee(),
+        networkPassphrase: Stellar.Networks.TESTNET
+      })
+        .addOperation(Stellar.Operation.changeTrust({ asset }))
+        .setTimeout(180)
+        .build();
+
+      transaction.sign(keypair);
+      const result = await server.submitTransaction(transaction);
+      return res.json(result);
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
+  }
+
+  async accountDetails(req, res, next) {}
 }
 
 module.exports = new Account();
