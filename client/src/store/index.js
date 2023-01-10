@@ -9,7 +9,8 @@ const localAccount = JSON.parse(localStorage.getItem('account'));
 const store = createStore({
   state() {
     return {
-      account: localAccount || null
+      account: localAccount || null,
+      details: null
     };
   },
   mutations: rootMutationsModule,

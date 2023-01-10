@@ -23,5 +23,19 @@ export default {
       .catch((err) => {
         console.log(err);
       });
-  }
+  },
+
+  accountDetails({ commit }, key) {
+    return axios
+      .get(`${BASE_URL}/account/details/?key=${key}`)
+      .then((res) => {
+        commit('DETAILS', res.data);
+        return res.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+
+  // addTrustLine(_, key) {}
 };
