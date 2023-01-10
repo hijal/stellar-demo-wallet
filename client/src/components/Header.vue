@@ -3,13 +3,21 @@
     <button @click="createAccount" class="btn btn-outline-primary mb-2">
       Create An Account
     </button>
-    <button class="btn btn-outline-primary mb-2">Trust Line</button>
+    <button
+      class="btn btn-outline-primary mb-2"
+      data-bs-toggle="modal"
+      data-bs-target="#trustLineModal"
+    >
+      Trust Line
+    </button>
     <button class="btn btn-outline-primary mb-2">Update Account</button>
     <button class="btn btn-outline-primary mb-2">Account Details</button>
     <button class="btn btn-outline-primary mb-2">Make Payment</button>
     <button class="btn btn-outline-primary mb-2">Deposit Asset</button>
     <button class="btn btn-outline-primary mb-2">Withdraw Asset</button>
     <button class="btn btn-outline-primary mb-2">Sign Out</button>
+
+    <TrustLineModal />
   </div>
 </template>
 
@@ -17,6 +25,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import TrustLineModal from './TrustLineModal.vue';
 
 export default {
   name: 'TheHeader',
@@ -25,6 +34,7 @@ export default {
       activeButton: null
     };
   },
+  components: { TrustLineModal },
   computed: {
     ...mapGetters(['account'])
   },
