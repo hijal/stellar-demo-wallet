@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div v-if="isLoading">
+    <Loader />
+  </div>
+  <div v-else>
     Account Details
     <hr />
     <ul class="list-group" v-if="details">
@@ -22,8 +25,16 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import Loader from './Loader.vue';
+
 export default {
   name: 'AccountDetails',
+  data() {
+    return {
+      isLoading: false
+    };
+  },
+  components: { Loader },
   computed: {
     ...mapGetters(['account', 'details'])
   },
@@ -32,7 +43,10 @@ export default {
   },
   mounted() {
     if (this.account) {
-      this.accountDetails(this.account.publicKey);
+      this.isLoading = true;
+      this.accountDetails(this.account.publicKey).then(() => {
+        this.isLoading = false;
+      });
     }
   }
 };

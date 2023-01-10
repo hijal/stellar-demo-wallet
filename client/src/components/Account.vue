@@ -1,5 +1,6 @@
 <template>
-  <div class="border-bottom container">
+  <div v-if="isLoading"><Loader /></div>
+  <div class="border-bottom container" v-else>
     <div class="row mb-2">
       <div class="col-8 border text-truncate">
         {{ account && account.publicKey }}
@@ -21,8 +22,18 @@
 <script>
 import { mapGetters } from 'vuex';
 
+import Loader from './Loader.vue';
+
 export default {
   name: 'AccountDetails',
+  data() {
+    return {
+      isLoading: false
+    };
+  },
+  components: {
+    Loader
+  },
   computed: {
     ...mapGetters(['account'])
   },

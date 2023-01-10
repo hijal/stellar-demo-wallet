@@ -5,6 +5,7 @@
     tabindex="-1"
     aria-labelledby="trustLineModalLabel"
     aria-hidden="true"
+    v-if="!isLoading"
   >
     <div class="modal-dialog">
       <div class="modal-content">
@@ -60,24 +61,34 @@
       </div>
     </div>
   </div>
+  <div>
+    <Loader v-if="isLoading" />
+  </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
 
+import Loader from './Loader.vue';
+
 export default {
   name: 'TrustLineModal',
   data() {
     return {
+      isLoading: false,
       formData: {
         code: '',
         issuer: ''
       }
     };
   },
+  components: {
+    Loader
+  },
   methods: {
     ...mapActions(['accountDetails', 'addTrustLine']),
-    async submitTrustLineHandler() {
+    submitTrustLineHandler() {
+      this.isLoading = true;
       const secretKey = this.account.secretKey;
       const publicKey = this.account.publicKey;
 
@@ -85,9 +96,13 @@ export default {
         ...this.formData,
         key: secretKey
       };
-      const result = await this.addTrustLine(payload);
-      console.log(result);
-      await this.accountDetails(publicKey);
+      this.addTrustLine(payload).then((res) => {
+        if (res.status === 200) {
+          this.accountDetails(publicKey).then(() => {
+            this.isLoading = false;
+          });
+        }
+      });
     }
   },
   computed: {
